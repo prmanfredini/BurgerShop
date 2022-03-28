@@ -1,6 +1,4 @@
 
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 
 const String mainURL = "https://burguershop.azurewebsites.net/api/cities-list";
