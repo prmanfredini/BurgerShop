@@ -1,13 +1,12 @@
-
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/cadastro2.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flux_validator_dart/flux_validator_dart.dart';
-
 
 class Cadastro extends StatefulWidget {
   @override
@@ -22,7 +21,7 @@ class _CadastroState extends State<Cadastro> {
   final _cidadeController = TextEditingController();
   final _cadastroKey = GlobalKey<FormState>();
 
-  //late bool showPass;
+  DateTime dataUnformatted = DateTime.now();
   bool ignore = true;
   var estados;
   var cidades;
@@ -138,42 +137,47 @@ class _CadastroState extends State<Cadastro> {
                                     //     : null,
                                     onChanged: (String value) {
                                       setState(() {});
-                                    }
-                                    ),
-                                TextFormField(
-                                    controller: _dataController,
-                                    style: const TextStyle(color: Colors.white),
-                                    decoration: InputDecoration(
-                                      prefixIconConstraints:
-                                          const BoxConstraints.tightForFinite(),
-                                      enabledBorder: const UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                      ),
-                                      labelText: Strings.nascimento,
-                                      hintText: 'dd/mm/yyyy',
-                                      hintStyle:
-                                          const TextStyle(color: Colors.grey),
-                                      labelStyle: const TextStyle(
-                                          color: Colors.grey, fontSize: 20),
-                                    ),
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      DataInputFormatter(),
-                                    ],
-                                    keyboardType: TextInputType.number,
-                                    validator: (value) => Validator.date(value)
-                                        ? 'Data inválida'
-                                        : null,
-                                    onChanged: (String value) {
-                                      setState(() {});
                                     }),
+                                DateTimePicker(
+                                  controller: _dataController,
+                                  decoration: InputDecoration(
+                                    prefixIconConstraints:
+                                        const BoxConstraints.tightForFinite(),
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
+                                    ),
+                                    labelText: Strings.nascimento,
+                                    hintText: 'dd/mm/yyyy',
+                                    hintStyle:
+                                        const TextStyle(color: Colors.grey),
+                                    labelStyle: const TextStyle(
+                                        color: Colors.grey, fontSize: 20),
+                                  ),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2050),
+                                  initialDate: DateTime.now(),
+                                  dateLabelText: 'Nascimento',
+                                  fieldLabelText: 'Data de nascimento',
+                                  style: const TextStyle(color: Colors.white),
+                                  type: DateTimePickerType.date,
+                                  dateMask: 'dd/MM/yyyy',
+                                  onChanged: (String value) {
+                                    dataUnformatted = DateTime.parse(value);
+                                    _dataController.text = value;
+                                    print(dataUnformatted);
+                                    setState(() {});
+                                  },
+                                  validator: (_) => _dataController.text.isEmpty
+                                      ? 'Selecione uma data'
+                                      : null,
+                                ),
                                 FutureBuilder(
                                   future: estados,
                                   builder: (BuildContext context,
@@ -191,8 +195,10 @@ class _CadastroState extends State<Cadastro> {
                                       }
                                     }
                                     return DropdownButtonFormField(
-                                      icon: Icon(Icons.expand_more_sharp),
-                                      iconEnabledColor: Theme.of(context).colorScheme.secondary,
+                                      icon: const Icon(Icons.expand_more_sharp),
+                                      iconEnabledColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       isExpanded: true,
                                       decoration: InputDecoration(
                                           prefixIconConstraints:
@@ -260,17 +266,22 @@ class _CadastroState extends State<Cadastro> {
                                     return IgnorePointer(
                                       ignoring: ignore,
                                       child: DropdownButtonFormField(
-                                        icon: Icon(Icons.expand_more_sharp),
-                                        iconEnabledColor: ignore ? null : Theme.of(context).colorScheme.secondary,
+                                        icon:
+                                            const Icon(Icons.expand_more_sharp),
+                                        iconEnabledColor: ignore
+                                            ? null
+                                            : Theme.of(context)
+                                                .colorScheme
+                                                .secondary,
                                         isExpanded: true,
                                         decoration: InputDecoration(
                                             prefixIconConstraints:
                                                 const BoxConstraints
                                                     .tightForFinite(),
                                             enabledBorder:
-                                                UnderlineInputBorder(
-                                              borderSide:
-                                                  BorderSide(color: Colors.white ),
+                                                const UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Colors.white),
                                             ),
                                             focusedBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
@@ -319,7 +330,7 @@ class _CadastroState extends State<Cadastro> {
                               onPressed: _validate(
                                   _nomeController.text,
                                   _cpfController.text,
-                                  _dataController.text,
+                                  dataUnformatted,
                                   _estadoController.text,
                                   _cidadeController.text),
                               style: ButtonStyle(
@@ -354,7 +365,6 @@ class _CadastroState extends State<Cadastro> {
   _validate(nome, cpf, data, estado, cidade) {
     if (nome.isNotEmpty &&
         cpf.isNotEmpty &&
-        data.isNotEmpty &&
         estado.isNotEmpty &&
         cidade.isNotEmpty) {
       return () {
@@ -365,12 +375,13 @@ class _CadastroState extends State<Cadastro> {
 //            .then((value) => setState(() {
 //                  //loading = false;
 //                }))
-          //  .whenComplete(() {
-          if (_cadastroKey.currentState!.validate()) {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Cadastro2()));
-          }
-       //});
+        //  .whenComplete(() {
+        if (_cadastroKey.currentState!.validate()) {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  Cadastro2(nome, cpf, data, estado, cidade)));
+        }
+        //});
       };
     }
     return null;

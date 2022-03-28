@@ -26,4 +26,6 @@ class CadastroBloc {
     print('lista $lista');
     return lista;
   }
+
+
 }

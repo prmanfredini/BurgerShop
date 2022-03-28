@@ -1,14 +1,27 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
+import 'package:burger_shop/features/burgershop/data/datasources/signup.dart';
+import 'package:burger_shop/features/burgershop/domain/entities/cadastro.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/home.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/landing_page.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flux_validator_dart/flux_validator_dart.dart';
 
 class Cadastro2 extends StatefulWidget {
+  final String nome;
+  final String cpf;
+  final DateTime data;
+  final String estado;
+  final String cidade;
+
+  const Cadastro2(this.nome, this.cpf, this.data, this.estado, this.cidade,
+      {Key? key})
+      : super(key: key);
+
   @override
   State<Cadastro2> createState() => _Cadastro2State();
 }
@@ -87,12 +100,15 @@ class _Cadastro2State extends State<Cadastro2> {
                                       labelStyle: const TextStyle(
                                           color: Colors.grey, fontSize: 20),
                                     ),
-                                    validator: (value) {
-                                      if (_userController.text.isEmpty) {
-                                        return 'Digite seu nome';
-                                      }
-                                      return null;
-                                    },
+                                    validator: (value) => Validator.email(value)
+                                        ? 'Digite um email'
+                                        : null,
+                                    // {
+                                    //   if (_userController.text.isEmpty) {
+                                    //     return 'Digite um email';
+                                    //   }
+                                    //   return null;
+                                    // },
                                     onChanged: (String value) {
                                       setState(() {});
                                     }),
@@ -171,8 +187,21 @@ class _Cadastro2State extends State<Cadastro2> {
                                       Strings.avancar,
                                       style: TextStyle(fontSize: 16),
                                     ),
-                              onPressed: _validate(_userController.text,
-                                  _passController.text, _pass2Controller.text),
+                              onPressed: completo(_authKey)
+                                  ? () {
+                                      setState(() {
+                                        loading = true;
+                                      });
+                                      validate(
+                                          widget.nome,
+                                          _userController.text,
+                                          widget.cpf,
+                                          widget.data,
+                                          widget.estado,
+                                          widget.cidade,
+                                          _passController.text);
+                                    }
+                                  : null,
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith<Color>(
@@ -202,24 +231,24 @@ class _Cadastro2State extends State<Cadastro2> {
     );
   }
 
-  _validate(String user, String senha, String confirma) {
-    if (user.isNotEmpty && senha.isNotEmpty && confirma.isNotEmpty) {
-      return () {
-        setState(() {
-          loading = true;
-        });
-        Future.delayed(const Duration(seconds: 1))
-            .then((value) => setState(() {
-                  loading = false;
-                }))
-            .whenComplete(() {
-          if (_authKey.currentState!.validate()) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoadingPage()));
-          }
-        });
-      };
-    }
-    return null;
+  validate(String fullname, String user, String cpf, DateTime data,
+      String state, String city, String senha) {
+    var novoUsuario = CadastroUsuario(
+        fullname: fullname,
+        username: user,
+        cpf: cpf,
+        date_birth: data,
+        state: state,
+        city: city,
+        password: senha);
+    print(novoUsuario.toJson());
+    print(novoUsuario.fullname);
+    WebCadastro().doSignUp(novoUsuario).then((value) => Navigator.of(context)
+        .pushReplacement(
+            MaterialPageRoute(builder: (context) => LoadingPage())));
   }
+}
+
+completo(_key) {
+  return _key.currentState?.validate() ?? false;
 }

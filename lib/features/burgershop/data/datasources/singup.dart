@@ -1,1 +1,0 @@
-//https://burguershop.azurewebsites.net/api/auth/signup
