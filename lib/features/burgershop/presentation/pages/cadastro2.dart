@@ -243,9 +243,10 @@ class _Cadastro2State extends State<Cadastro2> {
         password: senha);
     print(novoUsuario.toJson());
     print(novoUsuario.fullname);
-    WebCadastro().doSignUp(novoUsuario).then((value) => Navigator.of(context)
+    WebCadastro().doSignUp(novoUsuario).then((value) => print(value.username));
+        Navigator.of(context)
         .pushReplacement(
-            MaterialPageRoute(builder: (context) => LoadingPage())));
+            MaterialPageRoute(builder: (context) => LoadingPage()));
   }
 }
 
