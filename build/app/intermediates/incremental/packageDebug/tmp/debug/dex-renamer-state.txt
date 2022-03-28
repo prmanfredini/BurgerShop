@@ -1,0 +1,4 @@
+#Mon Mar 28 08:48:52 BRT 2022
+base.0=/Users/paulo.manfredini/burgershop/burgershop/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
