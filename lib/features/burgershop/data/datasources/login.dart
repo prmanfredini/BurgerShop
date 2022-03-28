@@ -11,7 +11,8 @@ class WebLogin {
     final response = await Dio().post(mainURL,
         data: '{ "username" : "$user", "password" : "$password" }');
     if (response.statusCode == 200) {
-      return response.data;
+
+      return UsuarioLogin.fromJson(response.data);
     }
     throw Exception('Erro inesperado');
   }

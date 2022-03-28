@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:burger_shop/features/burgershop/data/datasources/login.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
 
@@ -70,99 +71,103 @@ class _LoginState extends State<Login> {
                             child: Column(
                               children: [
                                 TextFormField(
-                                  controller: _userController,
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: InputDecoration(
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                    ),
-                                    prefixIconConstraints:
-                                        const BoxConstraints.tightForFinite(),
-                                    prefixIcon: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: Image.asset(
-                                        Assets.profileIcon,
-                                        color: _userController.text.isEmpty
-                                            ? Colors.grey
-                                            : Theme.of(context)
-                                                .colorScheme
-                                                .secondary,
+                                    controller: _userController,
+                                    style: const TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
                                       ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary),
+                                      ),
+                                      prefixIconConstraints:
+                                          const BoxConstraints.tightForFinite(),
+                                      prefixIcon: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                        child: Image.asset(
+                                          Assets.profileIcon,
+                                          color: _userController.text.isEmpty
+                                              ? Colors.grey
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                        ),
+                                      ),
+                                      labelText: Strings.usuario,
+                                      labelStyle: const TextStyle(
+                                          color: Colors.grey, fontSize: 16),
                                     ),
-                                    labelText: Strings.usuario,
-                                    labelStyle: const TextStyle(
-                                        color: Colors.grey, fontSize: 16),
-                                  ),
-                                  validator: (value) {
-                                    if (_passController.text != '123') {
-                                      return '';
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                    validator: (value) {
+                                      if (_passController.text.length < 3) {
+                                        return '';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (String value) {
+                                      setState(() {});
+                                    }),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 TextFormField(
-                                  controller: _passController,
-                                  obscureText: showPass,
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: InputDecoration(
-                                    prefixIconConstraints:
-                                        const BoxConstraints.tightForFinite(),
-                                    prefixIcon: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: Image.asset(
-                                        Assets.passwordIcon,
-                                        color: _passController.text.isEmpty
-                                            ? Colors.grey
-                                            : Theme.of(context)
+                                    controller: _passController,
+                                    obscureText: showPass,
+                                    style: const TextStyle(color: Colors.white),
+                                    decoration: InputDecoration(
+                                      prefixIconConstraints:
+                                          const BoxConstraints.tightForFinite(),
+                                      prefixIcon: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                        child: Image.asset(
+                                          Assets.passwordIcon,
+                                          color: _passController.text.isEmpty
+                                              ? Colors.grey
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
+                                        ),
+                                      ),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context)
                                                 .colorScheme
-                                                .secondary,
+                                                .secondary),
+                                      ),
+                                      labelText: Strings.senha,
+                                      labelStyle: const TextStyle(
+                                          color: Colors.grey, fontSize: 16),
+                                      suffixIcon: IconButton(
+                                        icon: Image.asset(
+                                            showPass
+                                                ? Assets.showIcon
+                                                : Assets.hiddenButtom,
+                                            color: Colors.grey),
+                                        onPressed: () {
+                                          setState(() {
+                                            showPass = !showPass;
+                                          });
+                                        },
                                       ),
                                     ),
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                    ),
-                                    labelText: Strings.senha,
-                                    labelStyle: const TextStyle(
-                                        color: Colors.grey, fontSize: 16),
-                                    suffixIcon: IconButton(
-                                      icon: Image.asset(
-                                          showPass
-                                              ? Assets.showIcon
-                                              : Assets.hiddenButtom,
-                                          color: Colors.grey),
-                                      onPressed: () {
-                                        setState(() {
-                                          showPass = !showPass;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  validator: (value) {
-                                    if (_passController.text != '123') {
-                                      return Strings.wrongLogin;
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                    validator: (value) {
+                                      if (_passController.text.length < 3) {
+                                        return Strings.wrongLogin;
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (String value) {
+                                      setState(() {});
+                                    }),
                               ],
                             ),
                           ),
@@ -248,6 +253,7 @@ class _LoginState extends State<Login> {
                     }))
                 .whenComplete(() {
               if (_loginKey.currentState!.validate()) {
+                WebLogin().doLogin(user,senha).then((value) => print(value.user.fullname));
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => LoadingPage()));
               }
@@ -258,48 +264,66 @@ class _LoginState extends State<Login> {
           showModalBottomSheet(
               context: context,
               builder: (builder) {
-            return Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height*0.5,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    SizedBox(height: 16),
-                    Text(Strings.conectadoCheck, style: TextStyle(fontSize: 24, color: Colors.white),),
-                    Text(Strings.conectadoHelp, style: TextStyle(fontSize: 12, color: Colors.grey),),
-                    Image.asset(Assets.imagemConnectionFail),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Theme.of(context).colorScheme.secondary),
+                return Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 16),
+                        Text(
+                          Strings.conectadoCheck,
+                          style: TextStyle(fontSize: 24, color: Colors.white),
                         ),
-                        child: Text('Tenta novamente',style: TextStyle(fontSize: 16),),
-                        onPressed: () { Navigator.pop(context); },),
+                        Text(
+                          Strings.conectadoHelp,
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                        Image.asset(Assets.imagemConnectionFail),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Theme.of(context).colorScheme.secondary),
+                            ),
+                            child: Text(
+                              'Tenta novamente',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          });
-        } on Error catch (_){
+                  ),
+                );
+              });
+        } on Error catch (_) {
           print('Erro inesperado');
           showModalBottomSheet(
               context: context,
               builder: (builder) {
                 return Container(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height*0.5,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
                         SizedBox(height: 16),
-                        Text(Strings.erroInesperado, style: TextStyle(fontSize: 24, color: Colors.white),),
-                        Text(Strings.erroHelp, style: TextStyle(fontSize: 12, color: Colors.grey),),
+                        Text(
+                          Strings.erroInesperado,
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                        ),
+                        Text(
+                          Strings.erroHelp,
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
                         Image.asset(Assets.imagemErroInesperado),
                         SizedBox(
                           width: double.infinity,
@@ -309,8 +333,14 @@ class _LoginState extends State<Login> {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Theme.of(context).colorScheme.secondary),
                             ),
-                            child: Text('Ok',style: TextStyle(fontSize: 16),),
-                            onPressed: () { Navigator.pop(context); },),
+                            child: Text(
+                              'Ok',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
                       ],
                     ),

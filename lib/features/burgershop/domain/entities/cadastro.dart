@@ -15,4 +15,27 @@ class CadastroUsuario {
       required this.state,
       required this.city,
       required this.password});
+
+  factory CadastroUsuario.fromJson(dynamic json) {
+    return CadastroUsuario(
+      fullname: json['fullname'],
+      username: json['username'],
+      cpf: json['cpf'],
+      date_birth: json['date_birth'],
+      state: json['state'],
+      city: json['city'],
+      password: json['password'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'fullname': fullname,
+    'username': username,
+    'cpf': cpf,
+    'date_birth': date_birth,
+    'state': state,
+    'city':city,
+    'password':password,
+  };
+
 }

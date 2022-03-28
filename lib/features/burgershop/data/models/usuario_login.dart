@@ -4,6 +4,12 @@ class UsuarioLogin{
   final Usuario user;
   final String token;
 
-  UsuarioLogin(this.user, this.token);
+  UsuarioLogin({required this.user, required this.token});
 
+  factory UsuarioLogin.fromJson(dynamic json) {
+    return UsuarioLogin(
+      user: Usuario.fromJson(json['user']),
+      token: json['token'],
+    );
+  }
 }
