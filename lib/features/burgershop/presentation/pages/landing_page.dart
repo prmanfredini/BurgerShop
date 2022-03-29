@@ -1,3 +1,6 @@
+import 'package:burger_shop/features/burgershop/presentation/bloc/loading_provider.dart';
+import 'package:provider/provider.dart';
+
 import 'cadastro.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
@@ -19,7 +22,7 @@ class LandingPage extends StatelessWidget {
       body: SafeArea(
         child: Container(
           decoration: const BoxDecoration(
-            image: const DecorationImage(
+            image: DecorationImage(
                 image: AssetImage(Assets.imagemBurgerHome), fit: BoxFit.cover),
           ),
           child: Padding(

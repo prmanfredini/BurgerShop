@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/data/datasources/login.dart';
+import 'package:burger_shop/features/burgershop/presentation/bloc/loading_provider.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginBloc {
   WebLogin webLogin = WebLogin();
@@ -20,6 +22,11 @@ class LoginBloc {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => LoadingPage()));
             });
+
+           //   Provider.of<LoadingProvider>(context).setLoad(true);
+           // Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+           //   Provider.of<LoadingProvider>(context).setLoad(false);
+           //  });
           }
         }).catchError((e) {
           return showDialog(

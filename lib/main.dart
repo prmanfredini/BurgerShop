@@ -1,6 +1,8 @@
+import 'package:burger_shop/features/burgershop/presentation/bloc/loading_provider.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/login_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/signup_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/user_validacao.dart';
+import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:provider/provider.dart';
 
 import 'features/burgershop/domain/usecases/app_dependecies.dart';
@@ -14,6 +16,7 @@ void main() {
     ChangeNotifierProvider(create: (context) => LoginValidation()),
     ChangeNotifierProvider(create: (context) => SignupValidation()),
     ChangeNotifierProvider(create: (context) => UserValidation()),
+    ChangeNotifierProvider(create: (context) => LoadingProvider()),
   ], child: BurgerShop(webEstados: WebEstados())));
 }
 
@@ -29,6 +32,11 @@ class BurgerShop extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: buildTheme(),
+        // builder: (context, child) => Overlay(initialEntries: [
+        //   OverlayEntry(
+        //     builder: (context) => LoadingCustom(child: LoadingPage()),
+        //   )
+        // ]),
         home: LandingPage(),
       ),
     );
