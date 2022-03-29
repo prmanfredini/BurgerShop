@@ -1,5 +1,4 @@
 class Strings {
-
   //titulos
   static const landing = 'Gerencie suas vendas. Obtenha lucros.';
   static const efetueLogin = 'Efetue o login';
@@ -37,9 +36,16 @@ class Strings {
   static const newUser = 'Usuário cadastrado';
   static const newUserHelp = 'Realize seu login e gerencie sua hamburgueria';
   static const wrongLogin = 'Seus dados estão incorretos. Tente novamente!';
+  static const novamente = 'Tenta novamente';
+  static const ok = 'Ok';
 
-
-
-
-
+  //validators
+  static const passCheck = 'Senhas não coincidem';
+  static const shortPass = 'Senha muito curta';
+  static const setEmail = 'Digite um email';
+  static const setCPF = 'Digite o CPF';
+  static const setNome = 'Digite seu nome';
+  static const setData = 'Selecione uma data';
+  static const setState = 'Selecione um estado';
+  static const setCity = 'Selecione uma cidade';
 }

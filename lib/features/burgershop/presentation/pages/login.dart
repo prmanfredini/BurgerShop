@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:burger_shop/features/burgershop/data/datasources/login.dart';
+import 'package:burger_shop/features/burgershop/presentation/bloc/login_bloc.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
 
@@ -20,12 +21,12 @@ class _LoginState extends State<Login> {
   final _userController = TextEditingController();
   final _passController = TextEditingController();
   final _loginKey = GlobalKey<FormState>();
-  late bool showPass;
+  bool hidePass = true;
   bool loading = false;
+  LoginBloc loginBloc = LoginBloc();
 
   @override
   void initState() {
-    showPass = true;
     super.initState();
   }
 
@@ -116,7 +117,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 TextFormField(
                                     controller: _passController,
-                                    obscureText: showPass,
+                                    obscureText: hidePass,
                                     style: const TextStyle(color: Colors.white),
                                     decoration: InputDecoration(
                                       prefixIconConstraints:
@@ -148,13 +149,13 @@ class _LoginState extends State<Login> {
                                           color: Colors.grey, fontSize: 16),
                                       suffixIcon: IconButton(
                                         icon: Image.asset(
-                                            showPass
+                                            hidePass
                                                 ? Assets.showIcon
                                                 : Assets.hiddenButtom,
                                             color: Colors.grey),
                                         onPressed: () {
                                           setState(() {
-                                            showPass = !showPass;
+                                            hidePass = !hidePass;
                                           });
                                         },
                                       ),
@@ -182,8 +183,15 @@ class _LoginState extends State<Login> {
                                       Strings.entrar,
                                       style: TextStyle(fontSize: 16),
                                     ),
-                              onPressed: _validate(
-                                  _userController.text, _passController.text),
+                              onPressed: loginBloc.formCheck(_loginKey)
+                                  ? () {
+                                      setState(() {
+                                        loading = true;
+                                      });
+                                      loginBloc.validate(_userController.text,
+                                          _passController.text, context);
+                                    }
+                                  : null,
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith<Color>(
@@ -235,121 +243,5 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
-  }
-
-  _validate(String user, String senha) {
-    if (user.isNotEmpty && senha.isNotEmpty) {
-      return () async {
-        setState(() {
-          loading = true;
-        });
-        try {
-          final result = await InternetAddress.lookup('example.com');
-          if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-            print('connected');
-            Future.delayed(const Duration(seconds: 2))
-                .then((value) => setState(() {
-                      loading = false;
-                    }))
-                .whenComplete(() {
-              if (_loginKey.currentState!.validate()) {
-                WebLogin().doLogin(user,senha).then((value) => print(value.user.fullname));
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoadingPage()));
-              }
-            });
-          }
-        } on SocketException catch (_) {
-          print('not connected');
-          showModalBottomSheet(
-              context: context,
-              builder: (builder) {
-                return Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 16),
-                        Text(
-                          Strings.conectadoCheck,
-                          style: TextStyle(fontSize: 24, color: Colors.white),
-                        ),
-                        Text(
-                          Strings.conectadoHelp,
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        Image.asset(Assets.imagemConnectionFail),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 48,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Theme.of(context).colorScheme.secondary),
-                            ),
-                            child: Text(
-                              'Tenta novamente',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              });
-        } on Error catch (_) {
-          print('Erro inesperado');
-          showModalBottomSheet(
-              context: context,
-              builder: (builder) {
-                return Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 16),
-                        Text(
-                          Strings.erroInesperado,
-                          style: TextStyle(fontSize: 24, color: Colors.white),
-                        ),
-                        Text(
-                          Strings.erroHelp,
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                        Image.asset(Assets.imagemErroInesperado),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 48,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Theme.of(context).colorScheme.secondary),
-                            ),
-                            child: Text(
-                              'Ok',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              });
-        }
-      };
-    }
-    return null;
   }
 }

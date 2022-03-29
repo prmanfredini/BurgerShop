@@ -21,6 +21,7 @@ class _CadastroState extends State<Cadastro> {
   final _cidadeController = TextEditingController();
   final _cadastroKey = GlobalKey<FormState>();
 
+  CadastroBloc cadastroBloc = CadastroBloc();
   DateTime dataUnformatted = DateTime.now();
   bool ignore = true;
   var estados;
@@ -73,71 +74,73 @@ class _CadastroState extends State<Cadastro> {
                             child: Column(
                               children: [
                                 TextFormField(
-                                    controller: _nomeController,
-                                    style: const TextStyle(color: Colors.white),
-                                    decoration: InputDecoration(
-                                      enabledBorder: const UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                      ),
-                                      prefixIconConstraints:
-                                          const BoxConstraints.tightForFinite(),
-                                      labelText: Strings.nome,
-                                      labelStyle: const TextStyle(
-                                          color: Colors.grey, fontSize: 20),
+                                  controller: _nomeController,
+                                  style: const TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
                                     ),
-                                    validator: (value) {
-                                      if (_nomeController.text.isEmpty) {
-                                        return 'Digite seu nome';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (String value) {
-                                      setState(() {});
-                                    }),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
+                                    ),
+                                    prefixIconConstraints:
+                                        const BoxConstraints.tightForFinite(),
+                                    labelText: Strings.nome,
+                                    labelStyle: const TextStyle(
+                                        color: Colors.grey, fontSize: 20),
+                                  ),
+                                  validator: (value) {
+                                    if (_nomeController.text.isEmpty) {
+                                      return Strings.setNome;
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (String value) {
+                                  //   setState(() {});
+                                  },
+                                ),
                                 TextFormField(
-                                    controller: _cpfController,
-                                    style: const TextStyle(color: Colors.white),
-                                    decoration: InputDecoration(
-                                      prefixIconConstraints:
-                                          const BoxConstraints.tightForFinite(),
-                                      enabledBorder: const UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                      ),
-                                      labelText: Strings.cpf,
-                                      labelStyle: const TextStyle(
-                                          color: Colors.grey, fontSize: 20),
+                                  controller: _cpfController,
+                                  style: const TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
+                                    prefixIconConstraints:
+                                        const BoxConstraints.tightForFinite(),
+                                    enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.white),
                                     ),
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly,
-                                      CpfInputFormatter(),
-                                    ],
-                                    keyboardType: TextInputType.number,
-                                    validator: (value) {
-                                      if (_cpfController.text.length < 14) {
-                                        return 'Digite o CPF';
-                                      }
-                                      return null;
-                                    },
-                                    // validator: (value) => Validator.cpf(value)
-                                    //     ? 'CPF inválido'
-                                    //     : null,
-                                    onChanged: (String value) {
-                                      setState(() {});
-                                    }),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary),
+                                    ),
+                                    labelText: Strings.cpf,
+                                    labelStyle: const TextStyle(
+                                        color: Colors.grey, fontSize: 20),
+                                  ),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    CpfInputFormatter(),
+                                  ],
+                                  keyboardType: TextInputType.number,
+                                  validator: (value) {
+                                    if (_cpfController.text.length < 14) {
+                                      return Strings.setCPF;
+                                    }
+                                    return null;
+                                  },
+                                  // validator: (value) => Validator.cpf(value)
+                                  //     ? Strings.setCPF
+                                  //     : null,
+                                  onChanged: (String value) {
+                                  //   setState(() {});
+                                  },
+                                ),
                                 DateTimePicker(
                                   controller: _dataController,
                                   decoration: InputDecoration(
@@ -163,19 +166,18 @@ class _CadastroState extends State<Cadastro> {
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2050),
                                   initialDate: DateTime.now(),
-                                  dateLabelText: 'Nascimento',
-                                  fieldLabelText: 'Data de nascimento',
+                                  fieldLabelText: Strings.nascimento,
                                   style: const TextStyle(color: Colors.white),
                                   type: DateTimePickerType.date,
                                   dateMask: 'dd/MM/yyyy',
                                   onChanged: (String value) {
                                     dataUnformatted = DateTime.parse(value);
                                     _dataController.text = value;
-                                    print(dataUnformatted);
-                                    setState(() {});
+                                    //print(dataUnformatted);
+                                    //setState(() {});
                                   },
                                   validator: (_) => _dataController.text.isEmpty
-                                      ? 'Selecione uma data'
+                                      ? Strings.setData
                                       : null,
                                 ),
                                 FutureBuilder(
@@ -239,7 +241,7 @@ class _CadastroState extends State<Cadastro> {
                                       },
                                       validator: (value) {
                                         if (value == null) {
-                                          return 'Selecione um estado';
+                                          return Strings.setState;
                                         }
                                         return null;
                                       },
@@ -310,7 +312,7 @@ class _CadastroState extends State<Cadastro> {
                                         },
                                         validator: (value) {
                                           if (value == null) {
-                                            return 'Selecione uma cidade';
+                                            return Strings.setCity;
                                           }
                                           return null;
                                         },
@@ -327,12 +329,18 @@ class _CadastroState extends State<Cadastro> {
                             height: 48,
                             child: ElevatedButton(
                               child: const Text(Strings.avancar),
-                              onPressed: _validate(
-                                  _nomeController.text,
-                                  _cpfController.text,
-                                  dataUnformatted,
-                                  _estadoController.text,
-                                  _cidadeController.text),
+                              onPressed: cadastroBloc.formCheck(_cadastroKey)
+                                  ? () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => Cadastro2(
+                                                  _nomeController.text,
+                                                  _cpfController.text,
+                                                  dataUnformatted,
+                                                  _estadoController.text,
+                                                  _cidadeController.text)));
+                                    }
+                                  : null,
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.resolveWith<Color>(
@@ -360,30 +368,5 @@ class _CadastroState extends State<Cadastro> {
         ),
       ),
     );
-  }
-
-  _validate(nome, cpf, data, estado, cidade) {
-    if (nome.isNotEmpty &&
-        cpf.isNotEmpty &&
-        estado.isNotEmpty &&
-        cidade.isNotEmpty) {
-      return () {
-//        setState(() {
-//          loading = true;
-//        });
-        //Future.delayed(const Duration(seconds: 0))
-//            .then((value) => setState(() {
-//                  //loading = false;
-//                }))
-        //  .whenComplete(() {
-        if (_cadastroKey.currentState!.validate()) {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  Cadastro2(nome, cpf, data, estado, cidade)));
-        }
-        //});
-      };
-    }
-    return null;
   }
 }

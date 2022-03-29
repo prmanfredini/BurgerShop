@@ -10,9 +10,8 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Timer(
         Duration(seconds: 3),
-            () =>
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => HomePage())));
+        () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext context) => HomePage())));
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,

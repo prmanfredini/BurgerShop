@@ -3,6 +3,7 @@ import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/data/datasources/signup.dart';
 import 'package:burger_shop/features/burgershop/domain/entities/cadastro.dart';
+import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/home.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/landing_page.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
@@ -32,7 +33,7 @@ class _Cadastro2State extends State<Cadastro2> {
   final _pass2Controller = TextEditingController();
   final _authKey = GlobalKey<FormState>();
 
-  //late bool showPass;
+  final CadastroBloc cadastroBloc = CadastroBloc();
   bool loading = false;
 
   @override
@@ -101,7 +102,7 @@ class _Cadastro2State extends State<Cadastro2> {
                                           color: Colors.grey, fontSize: 20),
                                     ),
                                     validator: (value) => Validator.email(value)
-                                        ? 'Digite um email'
+                                        ? Strings.setEmail
                                         : null,
                                     // {
                                     //   if (_userController.text.isEmpty) {
@@ -110,7 +111,7 @@ class _Cadastro2State extends State<Cadastro2> {
                                     //   return null;
                                     // },
                                     onChanged: (String value) {
-                                      setState(() {});
+                                      //setState(() {});
                                     }),
                                 TextFormField(
                                     controller: _passController,
@@ -135,12 +136,12 @@ class _Cadastro2State extends State<Cadastro2> {
                                     ),
                                     validator: (value) {
                                       if (_passController.text.length <= 3) {
-                                        return 'Senha muito curta';
+                                        return Strings.shortPass;
                                       }
                                       return null;
                                     },
                                     onChanged: (String value) {
-                                      setState(() {});
+                                     //setState(() {});
                                     }),
                                 TextFormField(
                                     controller: _pass2Controller,
@@ -166,7 +167,7 @@ class _Cadastro2State extends State<Cadastro2> {
                                     validator: (value) {
                                       if (_passController.text !=
                                           _pass2Controller.text) {
-                                        return 'Senhas não coincidem';
+                                        return Strings.passCheck;
                                       }
                                       return null;
                                     },
@@ -187,19 +188,20 @@ class _Cadastro2State extends State<Cadastro2> {
                                       Strings.avancar,
                                       style: TextStyle(fontSize: 16),
                                     ),
-                              onPressed: completo(_authKey)
+                              onPressed: cadastroBloc.formCheck(_authKey)
                                   ? () {
                                       setState(() {
                                         loading = true;
                                       });
-                                      validate(
+                                      cadastroBloc.validate(
                                           widget.nome,
                                           _userController.text,
                                           widget.cpf,
                                           widget.data,
                                           widget.estado,
                                           widget.cidade,
-                                          _passController.text);
+                                          _passController.text,
+                                          context);
                                     }
                                   : null,
                               style: ButtonStyle(
@@ -230,26 +232,4 @@ class _Cadastro2State extends State<Cadastro2> {
       ),
     );
   }
-
-  validate(String fullname, String user, String cpf, DateTime data,
-      String state, String city, String senha) {
-    var novoUsuario = CadastroUsuario(
-        fullname: fullname,
-        username: user,
-        cpf: cpf,
-        date_birth: data,
-        state: state,
-        city: city,
-        password: senha);
-    print(novoUsuario.toJson());
-    print(novoUsuario.fullname);
-    WebCadastro().doSignUp(novoUsuario).then((value) => print(value.username));
-        Navigator.of(context)
-        .pushReplacement(
-            MaterialPageRoute(builder: (context) => LoadingPage()));
-  }
-}
-
-completo(_key) {
-  return _key.currentState?.validate() ?? false;
 }
