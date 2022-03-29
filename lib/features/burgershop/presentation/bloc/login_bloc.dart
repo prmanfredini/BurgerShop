@@ -9,18 +9,26 @@ import 'package:flutter/material.dart';
 class LoginBloc {
   WebLogin webLogin = WebLogin();
 
-  formCheck(_key) {
-    return _key.currentState?.validate() ?? false;
-  }
-
   validate(String user, String senha, context) async {
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         //print('connected');
-        Future.delayed(const Duration(seconds: 2)).whenComplete(() {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => LoadingPage()));
+        webLogin.doLogin(user, senha).then((value) {
+          if (value == 200) {
+            Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoadingPage()));
+            });
+          }
+        }).catchError((e) {
+          return showDialog(
+              context: context,
+              builder: (context) =>
+              AlertDialog(
+                content: Text(Strings.wrongLogin),
+                actions: [TextButton(onPressed: ()=>Navigator.pop(context), child: Text(Strings.ok))],
+              ));
         });
       }
     } on SocketException catch (_) {

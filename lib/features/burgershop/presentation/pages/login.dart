@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:burger_shop/features/burgershop/data/datasources/login.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/login_bloc.dart';
+import 'package:burger_shop/features/burgershop/presentation/bloc/login_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
+import 'package:provider/provider.dart';
 
 import 'cadastro.dart';
 import 'package:burger_shop/core/assets/assets.dart';
@@ -21,6 +24,8 @@ class _LoginState extends State<Login> {
   final _userController = TextEditingController();
   final _passController = TextEditingController();
   final _loginKey = GlobalKey<FormState>();
+
+
   bool hidePass = true;
   bool loading = false;
   LoginBloc loginBloc = LoginBloc();
@@ -32,6 +37,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+  final validation = Provider.of<LoginValidation>(context);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -102,15 +108,11 @@ class _LoginState extends State<Login> {
                                       labelText: Strings.usuario,
                                       labelStyle: const TextStyle(
                                           color: Colors.grey, fontSize: 16),
+                                      errorText: validation.user.error
                                     ),
-                                    validator: (value) {
-                                      if (_passController.text.length < 3) {
-                                        return '';
-                                      }
-                                      return null;
-                                    },
                                     onChanged: (String value) {
-                                      setState(() {});
+                                      validation.changeUser(value);
+                                      //setState(() {});
                                     }),
                                 const SizedBox(
                                   height: 16,
@@ -159,15 +161,11 @@ class _LoginState extends State<Login> {
                                           });
                                         },
                                       ),
+                                      errorText: validation.pass.error
                                     ),
-                                    validator: (value) {
-                                      if (_passController.text.length < 3) {
-                                        return Strings.wrongLogin;
-                                      }
-                                      return null;
-                                    },
                                     onChanged: (String value) {
-                                      setState(() {});
+                                      validation.changePass(value);
+                                      //setState(() {});
                                     }),
                               ],
                             ),
@@ -183,10 +181,13 @@ class _LoginState extends State<Login> {
                                       Strings.entrar,
                                       style: TextStyle(fontSize: 16),
                                     ),
-                              onPressed: loginBloc.formCheck(_loginKey)
+                              onPressed: validation.isValid
                                   ? () {
                                       setState(() {
                                         loading = true;
+                                        Timer(
+                                            Duration(seconds: 2),
+                                        () => loading = false);
                                       });
                                       loginBloc.validate(_userController.text,
                                           _passController.text, context);
@@ -245,3 +246,4 @@ class _LoginState extends State<Login> {
     );
   }
 }
+

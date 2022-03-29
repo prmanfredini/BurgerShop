@@ -4,6 +4,7 @@ import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/data/datasources/signup.dart';
 import 'package:burger_shop/features/burgershop/domain/entities/cadastro.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
+import 'package:burger_shop/features/burgershop/presentation/bloc/user_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/home.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/landing_page.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
@@ -11,6 +12,7 @@ import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicato
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flux_validator_dart/flux_validator_dart.dart';
+import 'package:provider/provider.dart';
 
 class Cadastro2 extends StatefulWidget {
   final String nome;
@@ -43,6 +45,7 @@ class _Cadastro2State extends State<Cadastro2> {
 
   @override
   Widget build(BuildContext context) {
+    final validation = Provider.of<UserValidation>(context);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -100,18 +103,11 @@ class _Cadastro2State extends State<Cadastro2> {
                                       labelText: Strings.usuario,
                                       labelStyle: const TextStyle(
                                           color: Colors.grey, fontSize: 20),
+                                      errorText: validation.user.error
                                     ),
-                                    validator: (value) => Validator.email(value)
-                                        ? Strings.setEmail
-                                        : null,
-                                    // {
-                                    //   if (_userController.text.isEmpty) {
-                                    //     return 'Digite um email';
-                                    //   }
-                                    //   return null;
-                                    // },
+
                                     onChanged: (String value) {
-                                      //setState(() {});
+                                      validation.changeUser(value);
                                     }),
                                 TextFormField(
                                     controller: _passController,
@@ -133,15 +129,10 @@ class _Cadastro2State extends State<Cadastro2> {
                                       labelText: Strings.senha,
                                       labelStyle: const TextStyle(
                                           color: Colors.grey, fontSize: 20),
+                                      errorText: validation.pass.error
                                     ),
-                                    validator: (value) {
-                                      if (_passController.text.length <= 3) {
-                                        return Strings.shortPass;
-                                      }
-                                      return null;
-                                    },
                                     onChanged: (String value) {
-                                     //setState(() {});
+                                     validation.changePass(value);
                                     }),
                                 TextFormField(
                                     controller: _pass2Controller,
@@ -163,16 +154,10 @@ class _Cadastro2State extends State<Cadastro2> {
                                       labelText: Strings.confirmaSenha,
                                       labelStyle: const TextStyle(
                                           color: Colors.grey, fontSize: 20),
+                                        errorText: validation.pass2.error
                                     ),
-                                    validator: (value) {
-                                      if (_passController.text !=
-                                          _pass2Controller.text) {
-                                        return Strings.passCheck;
-                                      }
-                                      return null;
-                                    },
                                     onChanged: (String value) {
-                                      setState(() {});
+                                      validation.changePass2(value);
                                     }),
                               ],
                             ),
@@ -188,7 +173,7 @@ class _Cadastro2State extends State<Cadastro2> {
                                       Strings.avancar,
                                       style: TextStyle(fontSize: 16),
                                     ),
-                              onPressed: cadastroBloc.formCheck(_authKey)
+                              onPressed: validation.isValid
                                   ? () {
                                       setState(() {
                                         loading = true;

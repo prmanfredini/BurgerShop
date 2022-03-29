@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => LoginValidation()),
-    //ChangeNotifierProvider(create: (context) => SignupValidation()),
-    //ChangeNotifierProvider(create: (context) => UserValidation()),
+    ChangeNotifierProvider(create: (context) => SignupValidation()),
+    ChangeNotifierProvider(create: (context) => UserValidation()),
   ], child: BurgerShop(webEstados: WebEstados())));
 }
 

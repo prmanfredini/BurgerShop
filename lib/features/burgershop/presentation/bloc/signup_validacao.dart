@@ -28,7 +28,7 @@ class SignupValidation with ChangeNotifier {
   }
 
   void changeName(String value) {
-    if (value.length >= 3) {
+    if (value.isNotEmpty) {
       _name = ValidationItem(value, null);
     } else {
       _name = ValidationItem(null, Strings.setNome);
@@ -37,8 +37,9 @@ class SignupValidation with ChangeNotifier {
   }
 
   void changeCpf(String value) {
+    // if (!Validator.cpf(value)) {
     if (value.length == 14) {
-      _cpf = ValidationItem(value, null);
+        _cpf = ValidationItem(value, null);
     } else {
       _cpf = ValidationItem(null, Strings.setCPF);
     }

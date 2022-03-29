@@ -1,6 +1,7 @@
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/domain/entities/validacao_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flux_validator_dart/flux_validator_dart.dart';
 
 class UserValidation with ChangeNotifier {
   ValidationItem _user = ValidationItem(null, null);
@@ -20,7 +21,7 @@ class UserValidation with ChangeNotifier {
   }
 
   void changeUser(String value) {
-    if (value.length >= 3) {
+    if (!Validator.email(value)) {
       _user = ValidationItem(value, null);
     } else {
       _user = ValidationItem(null, Strings.setEmail);
@@ -39,9 +40,9 @@ class UserValidation with ChangeNotifier {
 
   void changePass2(String value) {
     if (value == _pass.value) {
-      _pass = ValidationItem(value, null);
+      _pass2 = ValidationItem(value, null);
     } else {
-      _pass = ValidationItem(null, Strings.passCheck);
+      _pass2 = ValidationItem(null, Strings.passCheck);
     }
     notifyListeners();
   }

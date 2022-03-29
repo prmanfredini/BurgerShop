@@ -2,11 +2,12 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
+import 'package:burger_shop/features/burgershop/presentation/bloc/signup_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/cadastro2.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flux_validator_dart/flux_validator_dart.dart';
+import 'package:provider/provider.dart';
 
 class Cadastro extends StatefulWidget {
   @override
@@ -35,6 +36,7 @@ class _CadastroState extends State<Cadastro> {
 
   @override
   Widget build(BuildContext context) {
+    final validation = Provider.of<SignupValidation>(context);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -77,92 +79,77 @@ class _CadastroState extends State<Cadastro> {
                                   controller: _nomeController,
                                   style: const TextStyle(color: Colors.white),
                                   decoration: InputDecoration(
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                    ),
-                                    prefixIconConstraints:
-                                        const BoxConstraints.tightForFinite(),
-                                    labelText: Strings.nome,
-                                    labelStyle: const TextStyle(
-                                        color: Colors.grey, fontSize: 20),
-                                  ),
-                                  validator: (value) {
-                                    if (_nomeController.text.isEmpty) {
-                                      return Strings.setNome;
-                                    }
-                                    return null;
-                                  },
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary),
+                                      ),
+                                      prefixIconConstraints:
+                                          const BoxConstraints.tightForFinite(),
+                                      labelText: Strings.nome,
+                                      labelStyle: const TextStyle(
+                                          color: Colors.grey, fontSize: 20),
+                                      errorText: validation.name.error),
                                   onChanged: (String value) {
-                                  //   setState(() {});
+                                    validation.changeName(value);
                                   },
                                 ),
                                 TextFormField(
                                   controller: _cpfController,
                                   style: const TextStyle(color: Colors.white),
                                   decoration: InputDecoration(
-                                    prefixIconConstraints:
-                                        const BoxConstraints.tightForFinite(),
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                    ),
-                                    labelText: Strings.cpf,
-                                    labelStyle: const TextStyle(
-                                        color: Colors.grey, fontSize: 20),
-                                  ),
+                                      prefixIconConstraints:
+                                          const BoxConstraints.tightForFinite(),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary),
+                                      ),
+                                      labelText: Strings.cpf,
+                                      labelStyle: const TextStyle(
+                                          color: Colors.grey, fontSize: 20),
+                                      errorText: validation.cpf.error),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.digitsOnly,
                                     CpfInputFormatter(),
                                   ],
                                   keyboardType: TextInputType.number,
-                                  validator: (value) {
-                                    if (_cpfController.text.length < 14) {
-                                      return Strings.setCPF;
-                                    }
-                                    return null;
-                                  },
-                                  // validator: (value) => Validator.cpf(value)
-                                  //     ? Strings.setCPF
-                                  //     : null,
                                   onChanged: (String value) {
-                                  //   setState(() {});
+                                    validation.changeCpf(value);
                                   },
                                 ),
                                 DateTimePicker(
                                   controller: _dataController,
                                   decoration: InputDecoration(
-                                    prefixIconConstraints:
-                                        const BoxConstraints.tightForFinite(),
-                                    enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                    ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary),
-                                    ),
-                                    labelText: Strings.nascimento,
-                                    hintText: 'dd/mm/yyyy',
-                                    hintStyle:
-                                        const TextStyle(color: Colors.grey),
-                                    labelStyle: const TextStyle(
-                                        color: Colors.grey, fontSize: 20),
-                                  ),
+                                      prefixIconConstraints:
+                                          const BoxConstraints.tightForFinite(),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .secondary),
+                                      ),
+                                      labelText: Strings.nascimento,
+                                      hintText: 'dd/mm/yyyy',
+                                      hintStyle:
+                                          const TextStyle(color: Colors.grey),
+                                      labelStyle: const TextStyle(
+                                          color: Colors.grey, fontSize: 20),
+                                      errorText: validation.data.error),
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2050),
                                   initialDate: DateTime.now(),
@@ -171,14 +158,10 @@ class _CadastroState extends State<Cadastro> {
                                   type: DateTimePickerType.date,
                                   dateMask: 'dd/MM/yyyy',
                                   onChanged: (String value) {
+                                    validation.changeData(value);
                                     dataUnformatted = DateTime.parse(value);
                                     _dataController.text = value;
-                                    //print(dataUnformatted);
-                                    //setState(() {});
                                   },
-                                  validator: (_) => _dataController.text.isEmpty
-                                      ? Strings.setData
-                                      : null,
                                 ),
                                 FutureBuilder(
                                   future: estados,
@@ -219,8 +202,8 @@ class _CadastroState extends State<Cadastro> {
                                           ),
                                           labelText: Strings.estado,
                                           labelStyle: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.grey)),
+                                              fontSize: 20, color: Colors.grey),
+                                          errorText: validation.estado.error),
                                       items: resultado.map((String e) {
                                         return DropdownMenuItem(
                                           value: e,
@@ -234,16 +217,12 @@ class _CadastroState extends State<Cadastro> {
                                       onChanged: (value) {
                                         _estadoController.text =
                                             value.toString();
+                                        validation
+                                            .changeEstado(value.toString());
                                         setState(() {
                                           cidades = CadastroBloc().buscaCidades(
                                               _estadoController.text);
                                         });
-                                      },
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return Strings.setState;
-                                        }
-                                        return null;
                                       },
                                     );
                                   },
@@ -294,7 +273,9 @@ class _CadastroState extends State<Cadastro> {
                                             labelText: Strings.cidade,
                                             labelStyle: const TextStyle(
                                                 fontSize: 20,
-                                                color: Colors.grey)),
+                                                color: Colors.grey),
+                                        errorText: validation.cidade.error
+                                        ),
                                         items: resultado.map((String e) {
                                           return DropdownMenuItem(
                                             value: e,
@@ -308,14 +289,9 @@ class _CadastroState extends State<Cadastro> {
                                         onChanged: (value) {
                                           _cidadeController.text =
                                               value.toString();
-                                          setState(() {});
+                                          validation.changeCidade(value.toString());
                                         },
-                                        validator: (value) {
-                                          if (value == null) {
-                                            return Strings.setCity;
-                                          }
-                                          return null;
-                                        },
+
                                       ),
                                     );
                                   },
@@ -329,7 +305,7 @@ class _CadastroState extends State<Cadastro> {
                             height: 48,
                             child: ElevatedButton(
                               child: const Text(Strings.avancar),
-                              onPressed: cadastroBloc.formCheck(_cadastroKey)
+                              onPressed: validation.isValid
                                   ? () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
