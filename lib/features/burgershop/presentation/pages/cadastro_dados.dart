@@ -26,8 +26,8 @@ class _CadastroState extends State<Cadastro> {
   CadastroBloc cadastroBloc = CadastroBloc();
   DateTime dataUnformatted = DateTime.now();
   bool ignore = true;
-  var estados;
-  var cidades;
+  dynamic estados;
+  dynamic cidades;
 
   @override
   initState() {
@@ -79,13 +79,15 @@ class _CadastroState extends State<Cadastro> {
                                 TextFormField(
                                   controller: _nomeController,
                                   style: const TextStyle(color: Colors.white),
-                                  decoration: inputDecorationForm(context, validation.name, Strings.nome),
+                                  decoration: inputDecorationForm(
+                                      context, validation.name, Strings.nome),
                                   onChanged: validation.changeName,
                                 ),
                                 TextFormField(
                                   controller: _cpfController,
                                   style: const TextStyle(color: Colors.white),
-                                  decoration: inputDecorationForm(context, validation.cpf, Strings.cpf),
+                                  decoration: inputDecorationForm(
+                                      context, validation.cpf, Strings.cpf),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.digitsOnly,
                                     CpfInputFormatter(),
@@ -95,7 +97,8 @@ class _CadastroState extends State<Cadastro> {
                                 ),
                                 DateTimePicker(
                                   controller: _dataController,
-                                  decoration: inputDecorationForm(context, validation.data, Strings.nascimento),
+                                  decoration: inputDecorationForm(context,
+                                      validation.data, Strings.nascimento),
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2050),
                                   initialDate: DateTime.now(),
@@ -131,15 +134,15 @@ class _CadastroState extends State<Cadastro> {
                                           .colorScheme
                                           .secondary,
                                       isExpanded: true,
-                                      decoration: inputDecorationForm(context, validation.estado, Strings.estado),
+                                      decoration: inputDecorationForm(context,
+                                          validation.estado, Strings.estado),
                                       items: resultado.map((String e) {
                                         return DropdownMenuItem(
                                           value: e,
                                           child: Text(
                                             e,
                                             style: const TextStyle(
-                                                color: Colors.white
-                                            ),
+                                                color: Colors.white),
                                           ),
                                         );
                                       }).toList(),
@@ -184,22 +187,24 @@ class _CadastroState extends State<Cadastro> {
                                                 .colorScheme
                                                 .secondary,
                                         isExpanded: true,
-                                        decoration: inputDecorationForm(context, validation.cidade, Strings.cidade),
+                                        decoration: inputDecorationForm(context,
+                                            validation.cidade, Strings.cidade),
                                         items: resultado.map((String e) {
                                           return DropdownMenuItem(
                                             value: e,
                                             child: Text(
                                               e,
-                                              style: const TextStyle(color: Colors.white),
+                                              style: const TextStyle(
+                                                  color: Colors.white),
                                             ),
                                           );
                                         }).toList(),
                                         onChanged: (value) {
                                           _cidadeController.text =
                                               value.toString();
-                                          validation.changeCidade(value.toString());
+                                          validation
+                                              .changeCidade(value.toString());
                                         },
-
                                       ),
                                     );
                                   },
@@ -208,26 +213,33 @@ class _CadastroState extends State<Cadastro> {
                             ),
                           ),
                           const SizedBox(height: 25),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 48,
-                            child: ElevatedButton(
-                              child: const Text(Strings.avancar),
-                              onPressed: validation.isValid
-                                  ? () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) => CadastroUser(
-                                                  _nomeController.text,
-                                                  _cpfController.text,
-                                                  dataUnformatted,
-                                                  _estadoController.text,
-                                                  _cidadeController.text)));
-                                    }
-                                  : null,
-                            ),
-                          ),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: ElevatedButton(
+                            child: const Text(Strings.avancar),
+                            onPressed: validation.isValid
+                                ? () {
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CadastroUser(
+                                              _nomeController.text,
+                                              _cpfController.text,
+                                              dataUnformatted,
+                                              _estadoController.text,
+                                              _cidadeController.text)));
+                            }
+                                : null,
+                          ),
+                        ),
                       ),
                     ),
                   ],

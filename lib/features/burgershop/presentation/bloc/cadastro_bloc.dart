@@ -47,6 +47,7 @@ class CadastroBloc {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => LoadingPage()));
         });
+
         /// TODO substituir loading page with provider
         //   Provider.of<LoadingProvider>(context).setLoad(true);
         // Future.delayed(const Duration(seconds: 2)).whenComplete(() {

@@ -1,6 +1,3 @@
-import 'package:burger_shop/features/burgershop/presentation/bloc/loading_provider.dart';
-import 'package:provider/provider.dart';
-
 import 'cadastro_dados.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
@@ -33,9 +30,7 @@ class LandingPage extends StatelessWidget {
               children: [
                 const Text(
                   Strings.landing,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32),
+                  style: TextStyle(color: Colors.white, fontSize: 32),
                 ),
                 Column(
                   children: [
@@ -44,9 +39,8 @@ class LandingPage extends StatelessWidget {
                       height: 48,
                       child: ElevatedButton(
                         child: const Text(Strings.cadastreSe,
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white)),
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.white)),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => Cadastro()));
@@ -59,14 +53,13 @@ class LandingPage extends StatelessWidget {
                       height: 48,
                       child: ElevatedButton(
                         child: const Text(Strings.entrar,
-                            style: TextStyle(
-                                fontSize: 16)),
+                            style: TextStyle(fontSize: 16)),
                         onPressed: () {
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (context) => Login()));
                         },
                         style: ButtonStyle(
-                          backgroundColor:  MaterialStateProperty.all<Color>(
+                          backgroundColor: MaterialStateProperty.all<Color>(
                               Theme.of(context).primaryColor),
                           side: MaterialStateProperty.all<BorderSide>(
                               BorderSide(
