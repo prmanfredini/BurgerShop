@@ -59,14 +59,21 @@ class LoadingCustom extends StatelessWidget {
 
 //pagina de loading
 
-class LoadingPage extends StatelessWidget {
+class LoadingPage extends StatefulWidget {
+  @override
+  State<LoadingPage> createState() => _LoadingPageState();
+}
+
+class _LoadingPageState extends State<LoadingPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => HomePage())));
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    Timer(
-        Duration(seconds: 3), () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => HomePage())));
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Center(

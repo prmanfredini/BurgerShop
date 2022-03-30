@@ -23,16 +23,20 @@ class _CadastroState extends State<Cadastro> {
   final _cidadeController = TextEditingController();
   final _cadastroKey = GlobalKey<FormState>();
 
-  CadastroBloc cadastroBloc = CadastroBloc();
   DateTime dataUnformatted = DateTime.now();
   bool ignore = true;
   dynamic estados;
   dynamic cidades;
+  late CadastroBloc cadastroBloc;
 
   @override
   initState() {
-    estados = CadastroBloc().buscaEstados();
     super.initState();
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        cadastroBloc = CadastroBloc(context);
+      });
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    estados = cadastroBloc.buscaEstados();});
   }
 
   @override
@@ -152,7 +156,7 @@ class _CadastroState extends State<Cadastro> {
                                         validation
                                             .changeEstado(value.toString());
                                         setState(() {
-                                          cidades = CadastroBloc().buscaCidades(
+                                          cidades = cadastroBloc.buscaCidades(
                                               _estadoController.text);
                                         });
                                       },

@@ -28,12 +28,16 @@ class _CadastroUserState extends State<CadastroUser> {
   final _pass2Controller = TextEditingController();
   final _authKey = GlobalKey<FormState>();
 
-  final CadastroBloc cadastroBloc = CadastroBloc();
+
   bool loading = false;
+  late CadastroBloc cadastroBloc;
 
   @override
   initState() {
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      cadastroBloc = CadastroBloc(context);
+    });
   }
 
   @override

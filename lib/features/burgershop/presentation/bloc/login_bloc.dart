@@ -7,9 +7,15 @@ import 'package:burger_shop/features/burgershop/data/models/usuario_request.dart
 import 'package:burger_shop/features/burgershop/data/datasources/dio.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginBloc {
-  CustomDio dio = CustomDio();
+  late CustomDio dio;
+
+  LoginBloc(BuildContext context){
+    dio = Provider.of<CustomDio>(context, listen: false);
+  }
+
   String path = '/auth/login';
   String method = 'POST';
 
@@ -19,9 +25,9 @@ class LoginBloc {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         //print('connected');
         try {
-          var data = LoginUsuario(username: user, password: senha).toJson();
+          final data = LoginUsuario(username: user, password: senha).toJson();
 
-          var login = await dio.request(path, data, method);
+          final login = await dio.request(path, data, method);
           //var login = await webLogin.doLogin(user, senha);
 
           if (login == 200) {

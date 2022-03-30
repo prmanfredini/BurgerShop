@@ -3,14 +3,20 @@ import 'package:burger_shop/features/burgershop/data/datasources/cidades.dart';
 import 'package:burger_shop/features/burgershop/data/datasources/estados.dart';
 import 'package:burger_shop/features/burgershop/data/datasources/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../domain/entities/cadastro.dart';
 import '../pages/loading.dart';
 
 class CadastroBloc {
+  late CustomDio dio;
+
+  CadastroBloc(BuildContext context){
+    dio = Provider.of<CustomDio>(context, listen: false);
+  }
+
   WebCidades webCidades = WebCidades();
   WebEstados webEstados = WebEstados();
-  //WebCadastro webCadastro = WebCadastro();
-  CustomDio dio = CustomDio();
+
   String path = '/auth/signup';
   String method = 'POST';
 
@@ -30,7 +36,7 @@ class CadastroBloc {
 
   validate(String fullname, String user, String cpf, DateTime data,
       String state, String city, String senha, context) async {
-    var novoUsuario = CadastroUsuario(
+    final novoUsuario = CadastroUsuario(
         fullname: fullname,
         username: user,
         cpf: cpf,
@@ -42,8 +48,8 @@ class CadastroBloc {
     print(novoUsuario);
 
     try {
-      //var cadastro = await webCadastro.doSignUp(novoUsuario);
-      var cadastro = await dio.request(path, novoUsuario, method);
+
+      final cadastro = await dio.request(path, novoUsuario, method);
 
       if (cadastro == 200) {
         Future.delayed(const Duration(seconds: 2)).whenComplete(() {

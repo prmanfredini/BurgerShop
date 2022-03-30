@@ -23,11 +23,14 @@ class _LoginState extends State<Login> {
 
   bool hidePass = true;
   bool loading = false;
-  LoginBloc loginBloc = LoginBloc();
+  late LoginBloc loginBloc;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      loginBloc = LoginBloc(context);
+    });
   }
 
   @override
@@ -177,8 +180,11 @@ class _LoginState extends State<Login> {
                                         Timer(const Duration(seconds: 1),
                                             () => loading = false);
                                       });
-                                      loginBloc.validate(_userController.text,
-                                          _passController.text, context, validation);
+                                      loginBloc.validate(
+                                          _userController.text,
+                                          _passController.text,
+                                          context,
+                                          validation);
                                     }
                                   : null,
                             ),
