@@ -3,7 +3,8 @@ import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/signup_validacao.dart';
-import 'package:burger_shop/features/burgershop/presentation/pages/cadastro2.dart';
+import 'package:burger_shop/features/burgershop/presentation/pages/cadastro_usuario.dart';
+import 'package:burger_shop/features/burgershop/presentation/widets/decoration_forms.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,78 +79,23 @@ class _CadastroState extends State<Cadastro> {
                                 TextFormField(
                                   controller: _nomeController,
                                   style: const TextStyle(color: Colors.white),
-                                  decoration: InputDecoration(
-                                      enabledBorder: const UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                      ),
-                                      prefixIconConstraints:
-                                          const BoxConstraints.tightForFinite(),
-                                      labelText: Strings.nome,
-                                      labelStyle: const TextStyle(
-                                          color: Colors.grey, fontSize: 20),
-                                      errorText: validation.name.error),
-                                  onChanged: (String value) {
-                                    validation.changeName(value);
-                                  },
+                                  decoration: inputDecorationForm(context, validation.name, Strings.nome),
+                                  onChanged: validation.changeName,
                                 ),
                                 TextFormField(
                                   controller: _cpfController,
                                   style: const TextStyle(color: Colors.white),
-                                  decoration: InputDecoration(
-                                      prefixIconConstraints:
-                                          const BoxConstraints.tightForFinite(),
-                                      enabledBorder: const UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                      ),
-                                      labelText: Strings.cpf,
-                                      labelStyle: const TextStyle(
-                                          color: Colors.grey, fontSize: 20),
-                                      errorText: validation.cpf.error),
+                                  decoration: inputDecorationForm(context, validation.cpf, Strings.cpf),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.digitsOnly,
                                     CpfInputFormatter(),
                                   ],
                                   keyboardType: TextInputType.number,
-                                  onChanged: (String value) {
-                                    validation.changeCpf(value);
-                                  },
+                                  onChanged: validation.changeCpf,
                                 ),
                                 DateTimePicker(
                                   controller: _dataController,
-                                  decoration: InputDecoration(
-                                      prefixIconConstraints:
-                                          const BoxConstraints.tightForFinite(),
-                                      enabledBorder: const UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                      ),
-                                      labelText: Strings.nascimento,
-                                      hintText: 'dd/mm/yyyy',
-                                      hintStyle:
-                                          const TextStyle(color: Colors.grey),
-                                      labelStyle: const TextStyle(
-                                          color: Colors.grey, fontSize: 20),
-                                      errorText: validation.data.error),
+                                  decoration: inputDecorationForm(context, validation.data, Strings.nascimento),
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2050),
                                   initialDate: DateTime.now(),
@@ -185,32 +131,15 @@ class _CadastroState extends State<Cadastro> {
                                           .colorScheme
                                           .secondary,
                                       isExpanded: true,
-                                      decoration: InputDecoration(
-                                          prefixIconConstraints:
-                                              const BoxConstraints
-                                                  .tightForFinite(),
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary),
-                                          ),
-                                          labelText: Strings.estado,
-                                          labelStyle: const TextStyle(
-                                              fontSize: 20, color: Colors.grey),
-                                          errorText: validation.estado.error),
+                                      decoration: inputDecorationForm(context, validation.estado, Strings.estado),
                                       items: resultado.map((String e) {
                                         return DropdownMenuItem(
                                           value: e,
                                           child: Text(
                                             e,
                                             style: const TextStyle(
-                                                color: Colors.white),
+                                                color: Colors.white
+                                            ),
                                           ),
                                         );
                                       }).toList(),
@@ -255,34 +184,13 @@ class _CadastroState extends State<Cadastro> {
                                                 .colorScheme
                                                 .secondary,
                                         isExpanded: true,
-                                        decoration: InputDecoration(
-                                            prefixIconConstraints:
-                                                const BoxConstraints
-                                                    .tightForFinite(),
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.white),
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary),
-                                            ),
-                                            labelText: Strings.cidade,
-                                            labelStyle: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.grey),
-                                        errorText: validation.cidade.error
-                                        ),
+                                        decoration: inputDecorationForm(context, validation.cidade, Strings.cidade),
                                         items: resultado.map((String e) {
                                           return DropdownMenuItem(
                                             value: e,
                                             child: Text(
                                               e,
-                                              style: const TextStyle(
-                                                  color: Colors.white),
+                                              style: const TextStyle(color: Colors.white),
                                             ),
                                           );
                                         }).toList(),
@@ -309,7 +217,7 @@ class _CadastroState extends State<Cadastro> {
                                   ? () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (context) => Cadastro2(
+                                              builder: (context) => CadastroUser(
                                                   _nomeController.text,
                                                   _cpfController.text,
                                                   dataUnformatted,
@@ -317,20 +225,6 @@ class _CadastroState extends State<Cadastro> {
                                                   _cidadeController.text)));
                                     }
                                   : null,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    if (states
-                                        .contains(MaterialState.disabled)) {
-                                      return Colors.white10;
-                                    }
-                                    return Theme.of(context)
-                                        .colorScheme
-                                        .secondary; // Use the component's default.
-                                  },
-                                ),
-                              ),
                             ),
                           ),
                         ],

@@ -8,7 +8,7 @@ import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart'
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
 import 'package:provider/provider.dart';
 
-import 'cadastro.dart';
+import 'cadastro_dados.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,6 @@ class _LoginState extends State<Login> {
   final _passController = TextEditingController();
   final _loginKey = GlobalKey<FormState>();
 
-
   bool hidePass = true;
   bool loading = false;
   LoginBloc loginBloc = LoginBloc();
@@ -37,7 +36,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-  final validation = Provider.of<LoginValidation>(context);
+    final validation = Provider.of<LoginValidation>(context);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -78,9 +77,9 @@ class _LoginState extends State<Login> {
                             child: Column(
                               children: [
                                 TextFormField(
-                                    controller: _userController,
-                                    style: const TextStyle(color: Colors.white),
-                                    decoration: InputDecoration(
+                                  controller: _userController,
+                                  style: const TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
                                       enabledBorder: const UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.white),
@@ -108,20 +107,17 @@ class _LoginState extends State<Login> {
                                       labelText: Strings.usuario,
                                       labelStyle: const TextStyle(
                                           color: Colors.grey, fontSize: 16),
-                                      errorText: validation.user.error
-                                    ),
-                                    onChanged: (String value) {
-                                      validation.changeUser(value);
-                                      //setState(() {});
-                                    }),
+                                      errorText: validation.user.error),
+                                  onChanged: validation.changeUser,
+                                ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 TextFormField(
-                                    controller: _passController,
-                                    obscureText: hidePass,
-                                    style: const TextStyle(color: Colors.white),
-                                    decoration: InputDecoration(
+                                  controller: _passController,
+                                  obscureText: hidePass,
+                                  style: const TextStyle(color: Colors.white),
+                                  decoration: InputDecoration(
                                       prefixIconConstraints:
                                           const BoxConstraints.tightForFinite(),
                                       prefixIcon: Padding(
@@ -161,12 +157,9 @@ class _LoginState extends State<Login> {
                                           });
                                         },
                                       ),
-                                      errorText: validation.pass.error
-                                    ),
-                                    onChanged: (String value) {
-                                      validation.changePass(value);
-                                      //setState(() {});
-                                    }),
+                                      errorText: validation.pass.error),
+                                  onChanged: validation.changePass,
+                                ),
                               ],
                             ),
                           ),
@@ -185,28 +178,13 @@ class _LoginState extends State<Login> {
                                   ? () {
                                       setState(() {
                                         loading = true;
-                                        Timer(
-                                            Duration(seconds: 2),
-                                        () => loading = false);
+                                        Timer(Duration(seconds: 2),
+                                            () => loading = false);
                                       });
                                       loginBloc.validate(_userController.text,
                                           _passController.text, context);
                                     }
                                   : null,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                    if (states
-                                        .contains(MaterialState.disabled)) {
-                                      return Colors.white10;
-                                    }
-                                    return Theme.of(context)
-                                        .colorScheme
-                                        .secondary; // Use the component's default.
-                                  },
-                                ),
-                              ),
                             ),
                           ),
                           const SizedBox(height: 25),
@@ -246,4 +224,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-

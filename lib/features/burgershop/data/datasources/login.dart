@@ -1,11 +1,10 @@
-import 'package:burger_shop/features/burgershop/data/models/usuario_response.dart';
+import 'package:burger_shop/core/strings/strings.dart';
 import 'package:dio/dio.dart';
 
-const String mainURL = "https://burguershop.azurewebsites.net/api/auth/login";
 
 class WebLogin {
   Future<int?> doLogin(String user, String password) async {
-    final response = await Dio().post(mainURL,
+    final response = await Dio().post(Strings.URL + '/auth/login',
         data: '{ "username" : "$user", "password" : "$password" }');
     if (response.statusCode == 200) {
       return response.statusCode;

@@ -1,7 +1,7 @@
 import 'package:burger_shop/features/burgershop/presentation/bloc/loading_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'cadastro.dart';
+import 'cadastro_dados.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'login.dart';
@@ -51,10 +51,6 @@ class LandingPage extends StatelessWidget {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => Cadastro()));
                         },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Theme.of(context).colorScheme.secondary),
-                        ),
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -64,13 +60,14 @@ class LandingPage extends StatelessWidget {
                       child: ElevatedButton(
                         child: const Text(Strings.entrar,
                             style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white)),
+                                fontSize: 16)),
                         onPressed: () {
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (context) => Login()));
                         },
                         style: ButtonStyle(
+                          backgroundColor:  MaterialStateProperty.all<Color>(
+                              Theme.of(context).primaryColor),
                           side: MaterialStateProperty.all<BorderSide>(
                               BorderSide(
                                   width: 2,

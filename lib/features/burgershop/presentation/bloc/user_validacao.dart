@@ -30,7 +30,7 @@ class UserValidation with ChangeNotifier {
   }
 
   void changePass(String value) {
-    if (value.length > 3) {
+    if (value.length >= 3) {
       _pass = ValidationItem(value, null);
     } else {
       _pass = ValidationItem(null, Strings.shortPass);

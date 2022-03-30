@@ -1,4 +1,6 @@
 class Strings {
+  //url
+  static const URL = 'https://burguershop.azurewebsites.net/api';
   //titulos
   static const landing = 'Gerencie suas vendas. Obtenha lucros.';
   static const efetueLogin = 'Efetue o login';
