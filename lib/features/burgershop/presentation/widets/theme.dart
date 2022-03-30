@@ -32,5 +32,10 @@ ThemeData buildTheme() {
         ),
       ),
     ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Colors.white,
+      selectionColor: Colors.grey,
+      selectionHandleColor: Colors.white,
+    ),
   );
 }

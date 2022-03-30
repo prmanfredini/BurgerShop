@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:burger_shop/features/burgershop/presentation/bloc/login_bloc.dart';
-import 'package:burger_shop/features/burgershop/presentation/bloc/login_validacao.dart';
+import 'package:burger_shop/features/burgershop/data/models/login_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -174,11 +174,11 @@ class _LoginState extends State<Login> {
                                   ? () {
                                       setState(() {
                                         loading = true;
-                                        Timer(const Duration(seconds: 2),
+                                        Timer(const Duration(seconds: 1),
                                             () => loading = false);
                                       });
                                       loginBloc.validate(_userController.text,
-                                          _passController.text, context);
+                                          _passController.text, context, validation);
                                     }
                                   : null,
                             ),

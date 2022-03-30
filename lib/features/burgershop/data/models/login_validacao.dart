@@ -38,8 +38,8 @@ class LoginValidation with ChangeNotifier {
   }
 
   void wrongPass() {
-    _user = ValidationItem(null, '');
-    _pass = ValidationItem(null, Strings.wrongLogin);
+    _user = ValidationItem(_user.value, '');
+    _pass = ValidationItem(_pass.value, Strings.wrongLogin);
     notifyListeners();
   }
 

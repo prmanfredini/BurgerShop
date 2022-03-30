@@ -1,7 +1,7 @@
-import 'package:burger_shop/features/burgershop/presentation/bloc/loading_provider.dart';
-import 'package:burger_shop/features/burgershop/presentation/bloc/login_validacao.dart';
-import 'package:burger_shop/features/burgershop/presentation/bloc/signup_validacao.dart';
-import 'package:burger_shop/features/burgershop/presentation/bloc/user_validacao.dart';
+import 'package:burger_shop/features/burgershop/data/models/loading_provider.dart';
+import 'package:burger_shop/features/burgershop/data/models/login_validacao.dart';
+import 'package:burger_shop/features/burgershop/data/models/signup_validacao.dart';
+import 'package:burger_shop/features/burgershop/data/models/user_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:provider/provider.dart';
 

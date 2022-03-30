@@ -7,7 +7,10 @@ import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicato
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../bloc/loading_provider.dart';
+import '../../data/models/loading_provider.dart';
+
+//funçao para builder overlay
+/// TODO emplementar essa parte
 
 class LoadingScreen {
   static TransitionBuilder init({
@@ -53,6 +56,8 @@ class LoadingCustom extends StatelessWidget {
   }
 }
 
+
+//pagina de loading
 
 class LoadingPage extends StatelessWidget {
   @override

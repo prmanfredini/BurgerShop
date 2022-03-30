@@ -2,7 +2,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
-import 'package:burger_shop/features/burgershop/presentation/bloc/signup_validacao.dart';
+import 'package:burger_shop/features/burgershop/data/models/signup_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/cadastro_usuario.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/decoration_forms.dart';
 import 'package:date_time_picker/date_time_picker.dart';

@@ -2,22 +2,27 @@ import 'dart:io';
 
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
-import 'package:burger_shop/features/burgershop/data/datasources/login.dart';
-import 'package:burger_shop/features/burgershop/presentation/bloc/loading_provider.dart';
+import 'package:burger_shop/features/burgershop/data/models/login_validacao.dart';
+import 'package:burger_shop/features/burgershop/data/models/usuario_request.dart';
+import 'package:burger_shop/features/burgershop/data/datasources/dio.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginBloc {
-  WebLogin webLogin = WebLogin();
+  CustomDio dio = CustomDio();
+  String path = '/auth/login';
+  String method = 'POST';
 
-  validate(String user, String senha, context) async {
+  validate(String user, String senha, context, LoginValidation validation) async {
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         //print('connected');
         try {
-          var login = await webLogin.doLogin(user, senha);
+          var data = LoginUsuario(username: user, password: senha).toJson();
+
+          var login = await dio.request(path, data, method);
+          //var login = await webLogin.doLogin(user, senha);
 
           if (login == 200) {
             Future.delayed(const Duration(seconds: 2)).whenComplete(() {
@@ -32,17 +37,7 @@ class LoginBloc {
             //  });
           }
         } catch (e) {
-          return showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              content: const Text(Strings.wrongLogin),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text(Strings.ok))
-              ],
-            ),
-          );
+          validation.wrongPass();
         }
       }
     } on SocketException catch (_) {
@@ -50,9 +45,9 @@ class LoginBloc {
       showModalBottomSheet(
         context: context,
         builder: (builder) {
-          return Container(
+          return SizedBox(
             width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.54,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -64,7 +59,7 @@ class LoginBloc {
                   ),
                   const Text(
                     Strings.conectadoHelp,
-                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
                   ),
                   Image.asset(Assets.imagemConnectionFail),
                   SizedBox(
@@ -73,7 +68,7 @@ class LoginBloc {
                     child: ElevatedButton(
                       child: const Text(
                         Strings.novamente,
-                        style: const TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 16),
                       ),
                       onPressed: () {
                         Navigator.pop(context);
@@ -91,9 +86,9 @@ class LoginBloc {
       showModalBottomSheet(
         context: context,
         builder: (builder) {
-          return Container(
+          return SizedBox(
             width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.54,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

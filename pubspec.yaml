@@ -17,6 +17,7 @@ dependencies:
   date_time_picker:
   flux_validator_dart:
   dio:
+  get_it:
 
   cupertino_icons: ^1.0.2
 

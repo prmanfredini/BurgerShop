@@ -1,7 +1,7 @@
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
-import 'package:burger_shop/features/burgershop/presentation/bloc/user_validacao.dart';
+import 'package:burger_shop/features/burgershop/data/models/user_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/decoration_forms.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
 import 'package:flutter/material.dart';
