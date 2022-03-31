@@ -23,6 +23,6 @@ class CustomDio extends ChangeNotifier {
       return response.statusCode;
       //return UsuarioLogin.fromJson(response.data);
     }
-    throw Exception('Erro inesperado');
+    throw Exception(Strings.erroInesperado);
   }
 }

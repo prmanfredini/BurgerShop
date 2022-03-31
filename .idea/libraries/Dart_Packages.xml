@@ -107,13 +107,6 @@
             </list>
           </value>
         </entry>
-        <entry key="get_it">
-          <value>
-            <list>
-              <option value="$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/get_it-7.2.0/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="http_parser">
           <value>
             <list>
@@ -256,7 +249,6 @@
       <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
       <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/lib" />
       <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/flux_validator_dart-2.0.0/lib" />
-      <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/get_it-7.2.0/lib" />
       <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/lib" />
       <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/lib" />
       <root url="file://$USER_HOME$/flutter/.pub-cache/hosted/pub.dartlang.org/lints-1.0.1/lib" />

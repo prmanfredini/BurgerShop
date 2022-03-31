@@ -1,4 +1,4 @@
-import 'package:burger_shop/features/burgershop/data/datasources/dio.dart';
+import 'package:burger_shop/features/burgershop/data/network/dio.dart';
 import 'package:burger_shop/features/burgershop/data/models/loading_provider.dart';
 import 'package:burger_shop/features/burgershop/data/models/login_validacao.dart';
 import 'package:burger_shop/features/burgershop/data/models/signup_validacao.dart';

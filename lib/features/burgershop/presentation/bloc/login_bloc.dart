@@ -4,7 +4,7 @@ import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/data/models/login_validacao.dart';
 import 'package:burger_shop/features/burgershop/data/models/usuario_request.dart';
-import 'package:burger_shop/features/burgershop/data/datasources/dio.dart';
+import 'package:burger_shop/features/burgershop/data/network/dio.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

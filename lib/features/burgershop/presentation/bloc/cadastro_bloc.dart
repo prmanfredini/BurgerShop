@@ -1,7 +1,7 @@
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/data/datasources/cidades.dart';
 import 'package:burger_shop/features/burgershop/data/datasources/estados.dart';
-import 'package:burger_shop/features/burgershop/data/datasources/dio.dart';
+import 'package:burger_shop/features/burgershop/data/network/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../domain/entities/cadastro.dart';

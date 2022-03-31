@@ -120,15 +120,15 @@ class _CadastroState extends State<Cadastro> {
                                   future: estados,
                                   builder: (BuildContext context,
                                       AsyncSnapshot<dynamic> snapshot) {
-                                    var resultado = ['Estados'];
+                                    var resultado = [Strings.estado];
                                     if (snapshot.connectionState ==
                                         ConnectionState.done) {
                                       if (snapshot.hasError) {
-                                        resultado = ["Error"];
+                                        resultado = [Strings.error];
                                       } else {
                                         resultado = snapshot.data;
                                         if (resultado.isEmpty) {
-                                          resultado = ["Algo deu errado."];
+                                          resultado = [Strings.algoErrado];
                                         }
                                       }
                                     }
@@ -167,16 +167,16 @@ class _CadastroState extends State<Cadastro> {
                                   future: cidades,
                                   builder: (BuildContext context,
                                       AsyncSnapshot<dynamic> snapshot) {
-                                    var resultado = ['Cidades'];
+                                    var resultado = [Strings.cidade];
                                     if (snapshot.connectionState ==
                                         ConnectionState.done) {
                                       if (snapshot.hasError) {
-                                        resultado = ["Error"];
+                                        resultado = [Strings.error];
                                       } else {
                                         ignore = false;
                                         resultado = snapshot.data;
                                         if (resultado.isEmpty) {
-                                          resultado = ["Algo deu errado."];
+                                          resultado = [Strings.algoErrado];
                                         }
                                       }
                                     }
