@@ -62,6 +62,7 @@ flutter:
     - lib/core/assets/images/StrokeRight.png
     - lib/core/assets/images/Ketchup.png
     - lib/core/assets/images/IllustrationDica.png
+    - lib/core/assets/images/SucessoCadastro.png
 
 
   # To add custom fonts to your application, add a fonts section here,

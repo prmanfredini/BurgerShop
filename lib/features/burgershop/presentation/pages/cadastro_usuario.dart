@@ -1,7 +1,7 @@
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
-import 'package:burger_shop/features/burgershop/data/models/user_validacao.dart';
+import '../../data/provider/user_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/decoration_forms.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,6 @@ class _CadastroUserState extends State<CadastroUser> {
   final _passController = TextEditingController();
   final _pass2Controller = TextEditingController();
   final _authKey = GlobalKey<FormState>();
-
 
   bool loading = false;
   late CadastroBloc cadastroBloc;
@@ -84,8 +83,11 @@ class _CadastroUserState extends State<CadastroUser> {
                                 TextFormField(
                                   controller: _userController,
                                   style: const TextStyle(color: Colors.white),
-                                  decoration: inputDecorationForm(context,
-                                      validation.user, Strings.usuario),
+                                  decoration: inputDecorationForm(
+                                      context,
+                                      validation.user,
+                                      Strings.usuario,
+                                      _userController),
                                   onChanged: validation.changeUser,
                                 ),
                                 TextFormField(
@@ -93,15 +95,21 @@ class _CadastroUserState extends State<CadastroUser> {
                                   obscureText: true,
                                   style: const TextStyle(color: Colors.white),
                                   decoration: inputDecorationForm(
-                                      context, validation.pass, Strings.senha),
+                                      context,
+                                      validation.pass,
+                                      Strings.senha,
+                                      _passController),
                                   onChanged: validation.changePass,
                                 ),
                                 TextFormField(
                                   controller: _pass2Controller,
                                   obscureText: true,
                                   style: const TextStyle(color: Colors.white),
-                                  decoration: inputDecorationForm(context,
-                                      validation.pass2, Strings.confirmaSenha),
+                                  decoration: inputDecorationForm(
+                                      context,
+                                      validation.pass2,
+                                      Strings.confirmaSenha,
+                                      _pass2Controller),
                                   onChanged: validation.changePass2,
                                 ),
                               ],

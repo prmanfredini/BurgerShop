@@ -1,8 +1,14 @@
+import 'package:burger_shop/features/burgershop/data/provider/login_validacao.dart';
 import 'package:dio/dio.dart';
 class CustomInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    //Headers.acceptHeader;
     print('REQUEST[${options.method}] => PATH: ${options.path}');
+//    if (!options.headers.containsKey("token")) {
+//      String? token = LoginValidation().token;
+//      options.headers["token"] = token;
+//    }
     return super.onRequest(options, handler);
   }
   @override

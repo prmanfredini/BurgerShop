@@ -5,6 +5,7 @@ class Assets {
   static const imagemLogo = 'lib/core/assets/images/ImageLogo.png';
   static const imagemConnectionFail = 'lib/core/assets/images/Saly-11.png';
   static const imagemErroInesperado = 'lib/core/assets/images/Saly-13.png';
+  static const imagemCadastroSucesso = 'lib/core/assets/images/SucessoCadastro.png';
   static const imagemDicaDia = 'lib/core/assets/images/IllustrationDica.png';
 
   static const burgerLoading = 'lib/core/assets/images/BurgerLoading.png';

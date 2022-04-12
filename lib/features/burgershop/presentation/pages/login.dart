@@ -1,6 +1,7 @@
 import 'dart:async';
+import 'package:burger_shop/features/burgershop/data/provider/login_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/login_bloc.dart';
-import 'package:burger_shop/features/burgershop/data/models/login_validacao.dart';
+import 'package:burger_shop/features/burgershop/presentation/widets/decoration_forms.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/dot_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -78,35 +79,12 @@ class _LoginState extends State<Login> {
                                 TextFormField(
                                   controller: _userController,
                                   style: const TextStyle(color: Colors.white),
-                                  decoration: InputDecoration(
-                                      enabledBorder: const UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.white),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                      ),
-                                      prefixIconConstraints:
-                                          const BoxConstraints.tightForFinite(),
-                                      prefixIcon: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 8.0),
-                                        child: Image.asset(
-                                          Assets.profileIcon,
-                                          color: _userController.text.isEmpty
-                                              ? Colors.grey
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
-                                        ),
-                                      ),
-                                      labelText: Strings.usuario,
-                                      labelStyle: const TextStyle(
-                                          color: Colors.grey, fontSize: 16),
-                                      errorText: validation.user.error),
+                                  decoration: inputDecorationForm(
+                                      context,
+                                      validation.user,
+                                      Strings.usuario,
+                                      _userController,
+                                      icon: Assets.profileIcon),
                                   onChanged: validation.changeUser,
                                 ),
                                 const SizedBox(

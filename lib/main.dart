@@ -1,8 +1,8 @@
 import 'package:burger_shop/features/burgershop/data/network/dio.dart';
-import 'package:burger_shop/features/burgershop/data/models/loading_provider.dart';
-import 'package:burger_shop/features/burgershop/data/models/login_validacao.dart';
-import 'package:burger_shop/features/burgershop/data/models/signup_validacao.dart';
-import 'package:burger_shop/features/burgershop/data/models/user_validacao.dart';
+import 'features/burgershop/data/provider/loading_provider.dart';
+import 'package:burger_shop/features/burgershop/data/provider/login_validacao.dart';
+import 'package:burger_shop/features/burgershop/data/provider/signup_validacao.dart';
+import 'features/burgershop/data/provider/user_validacao.dart';
 import 'package:provider/provider.dart';
 import 'features/burgershop/presentation/pages/landing_page.dart';
 import 'features/burgershop/presentation/widets/theme.dart';

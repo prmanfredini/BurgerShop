@@ -1,7 +1,44 @@
 import 'package:burger_shop/core/assets/assets.dart';
+import 'package:burger_shop/core/strings/strings.dart';
+import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
+import 'package:burger_shop/features/burgershop/presentation/pages/cadastrar_burger.dart';
+import 'package:burger_shop/features/burgershop/presentation/pages/dashboard.dart';
+import 'package:burger_shop/features/burgershop/presentation/pages/simulador.dart';
+import 'package:burger_shop/features/burgershop/presentation/widets/bottombar.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  late TabController tabController;
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    tabController = TabController(vsync: this, length: 3)
+      ..addListener(() {
+        setState(() {
+          switch (tabController.index) {
+            case 0:
+              break;
+            case 1:
+              break;
+            case 2:
+              break;
+          }
+        });
+      });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +57,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Center(
               child: Text(
-                'Hoje, ${DateTime.now().day.toString()}/${DateTime.now().month.toString().padLeft(2, '0')}',
+                '${Strings.hoje}, ${DateTime.now().day.toString().padLeft(2, '0')}/${DateTime.now().month.toString().padLeft(2, '0')}',
                 style: const TextStyle(fontSize: 16),
               ),
             ),
@@ -29,65 +66,31 @@ class HomePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              SizedBox(
-                width: double.infinity,
-                height: 160,
-                child: Card(
-                  color: Theme.of(context).colorScheme.secondary,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 30),
-                          child: Text(
-                            'X',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Aproveite!',
-                        style: TextStyle(fontSize: 12, color: Colors.white),
-                      ),
-                      Text(
-                        'Dica do dia',
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 25)
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          padding: const EdgeInsets.only(top: 16.0,left: 16,right: 16),
+          child: TabBarView(
+              controller: tabController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                Dashboard(),
+            RefreshIndicator(
+               backgroundColor: Colors.grey[200],
+               color: Theme.of(context).colorScheme.secondary,
+              strokeWidth: 3,
+              triggerMode: RefreshIndicatorTriggerMode.onEdge,
+              onRefresh: () async {
+                await Future.delayed(const Duration(milliseconds: 1500));
+                  print('teste');
+//                setState(() { });
+              },
+              child: CadastroBurger(),
+            ),
+
+            Simulador(),
+          ]),
         ),
       ),
-
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        selectedItemColor: Theme.of(context).colorScheme.secondary,
-        unselectedItemColor: Colors.white,
-        currentIndex: 0,
-        //onTap: _onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-              label: 'Dashboard',
-              icon: ImageIcon(AssetImage(Assets.dashboardIcon))),
-          BottomNavigationBarItem(
-              label: 'Cadastrar', icon: ImageIcon(AssetImage(Assets.pathPlus))),
-          BottomNavigationBarItem(
-              label: 'Simulador', icon: ImageIcon(AssetImage(Assets.discountIcon))),
-        ],
-      ),
+        bottomNavigationBar: bottomBar(context, tabController),
     );
   }
 }
+

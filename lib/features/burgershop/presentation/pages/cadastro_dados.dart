@@ -1,8 +1,8 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:burger_shop/core/assets/assets.dart';
 import 'package:burger_shop/core/strings/strings.dart';
+import 'package:burger_shop/features/burgershop/data/provider/signup_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/bloc/cadastro_bloc.dart';
-import 'package:burger_shop/features/burgershop/data/models/signup_validacao.dart';
 import 'package:burger_shop/features/burgershop/presentation/pages/cadastro_usuario.dart';
 import 'package:burger_shop/features/burgershop/presentation/widets/decoration_forms.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -84,14 +84,14 @@ class _CadastroState extends State<Cadastro> {
                                   controller: _nomeController,
                                   style: const TextStyle(color: Colors.white),
                                   decoration: inputDecorationForm(
-                                      context, validation.name, Strings.nome),
+                                      context, validation.name, Strings.nome, _nomeController),
                                   onChanged: validation.changeName,
                                 ),
                                 TextFormField(
                                   controller: _cpfController,
                                   style: const TextStyle(color: Colors.white),
                                   decoration: inputDecorationForm(
-                                      context, validation.cpf, Strings.cpf),
+                                      context, validation.cpf, Strings.cpf, _cpfController),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.digitsOnly,
                                     CpfInputFormatter(),
@@ -102,7 +102,7 @@ class _CadastroState extends State<Cadastro> {
                                 DateTimePicker(
                                   controller: _dataController,
                                   decoration: inputDecorationForm(context,
-                                      validation.data, Strings.nascimento),
+                                      validation.data, Strings.nascimento, _dataController),
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime(2050),
                                   initialDate: DateTime.now(),
@@ -139,7 +139,7 @@ class _CadastroState extends State<Cadastro> {
                                           .secondary,
                                       isExpanded: true,
                                       decoration: inputDecorationForm(context,
-                                          validation.estado, Strings.estado),
+                                          validation.estado, Strings.estado, _estadoController),
                                       items: resultado.map((String e) {
                                         return DropdownMenuItem(
                                           value: e,
@@ -191,8 +191,11 @@ class _CadastroState extends State<Cadastro> {
                                                 .colorScheme
                                                 .secondary,
                                         isExpanded: true,
-                                        decoration: inputDecorationForm(context,
-                                            validation.cidade, Strings.cidade),
+                                        decoration: inputDecorationForm(
+                                            context,
+                                            validation.cidade,
+                                            Strings.cidade,
+                                            _cidadeController),
                                         items: resultado.map((String e) {
                                           return DropdownMenuItem(
                                             value: e,
