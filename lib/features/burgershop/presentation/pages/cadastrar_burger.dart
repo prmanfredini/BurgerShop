@@ -60,9 +60,8 @@ class _CadastroBurgerState extends State<CadastroBurger> {
                                   width:
                                   MediaQuery.of(context).size.width,
                                   height: 156,
-                                  child: Image.network(_suggestions[index].cover),//Center(child: Text('imagem')),
+                                  child: Image.network(_suggestions[index].cover, fit: BoxFit.cover,),
                                 ),
-                                //Image.network(_suggestions[index].cover),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 16.0,
