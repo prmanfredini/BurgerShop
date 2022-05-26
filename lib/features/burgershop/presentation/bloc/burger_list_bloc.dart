@@ -36,5 +36,4 @@ class BurgerBloc {
       throw Exception('BurgerError');
     }
   }
-
 }
